@@ -1,0 +1,35 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.spatial.distance import cdist 
+
+# Synaptic parameters
+num_neurotransmitters = 1000  # Total neurotransmitter molecules
+cleft_length = 1.0  # Synaptic cleft dimension (µm)
+cleft_height = 0.2  # Height of synaptic cleft (µm)
+diffusion_coefficient = 0.1  # Diffusion constant (µm^2/ms)
+time_step = 0.01  # Time step (ms)
+total_time = 10.0  # Total simulation time (ms)
+
+# Receptor parameters
+num_receptors = 50  # Number of receptors
+binding_radius = 0.01  # Binding radius around receptors (µm)
+z_axon = 0.1  # Axon surface height (µm)
+axon_binding_radius = 0.01  # Radius within which binding occurs to the axon
+
+
+# Generate receptor positions on the postsynaptic membrane (z=0 plane)
+receptor_positions = np.column_stack((
+    np.random.uniform(0, cleft_length, num_receptors),  # x-coordinates
+    np.random.uniform(0, cleft_length, num_receptors),  # y-coordinates
+    np.zeros(num_receptors)  # z=0 (postsynaptic membrane)
+))
+
+
+# Start neurotransmitters at the center of the cleft (z = cleft_height)
+neurotransmitter_positions = np.zeros((num_neurotransmitters, 3))
+neurotransmitter_positions[:, 0] = cleft_length / 2  # x
+neurotransmitter_positions[:, 1] = cleft_length / 2  # y
+neurotransmitter_positions[:, 2] = cleft_height  # z (release height)
+
+
+
